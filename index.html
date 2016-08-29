@@ -23,6 +23,7 @@
     <div class="hack-card"></div>
     <div class="hack-card" ng-repeat="tweet in tweets" ng-class="{'active': $index === active}" ng-style="styleCard(tweet)">
         {{tweet.text}}
+        <img src="{{tweet.legitMediaURL}}"/>
         <!-- <pre>{{tweet | json}}</pre> -->
     </div>
     <div class="hack-card"></div>

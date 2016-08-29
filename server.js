@@ -3,6 +3,8 @@
 
 const express = require('express')
 const restClient = require('request-promise')
+const Await = require('asyncawait/await');
+const Async = require('asyncawait/async')
 
 
 module.exports = (() => {
@@ -16,10 +18,10 @@ module.exports = (() => {
 
     let port = 5000
 
-    const twitterSearchString = 'from:guychurchward OR @emc OR #emc'
+    const twitterSearchString = '#emchackathon2016'
 
 
-    let getTweets = (req, res, next) => {
+    let getTweets = Async((req, res, next) => {
         let searchTweetsReq = {
             'request': 'GET',
             'headers': {
@@ -33,17 +35,11 @@ module.exports = (() => {
             json: true
         }
 
-        restClient(searchTweetsReq)
-            .then((tweets) => {
-                console.log(JSON.stringify(tweets, null, '  '))
-                res.json(tweets)
-            })
-            .catch((err) => {
-                res.status(500).json({'error': err})
-                console.log('error', err)
-            })
 
-    }
+        let tweets = Await(restClient(searchTweetsReq))
+        console.log('got tweets', tweets)
+        res.json(tweets)
+    })
 
 
     let handleAuth = (req, res, next) => {
@@ -91,4 +87,3 @@ module.exports = (() => {
     init()
 
 })()
-

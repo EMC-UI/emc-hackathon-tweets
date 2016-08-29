@@ -52,6 +52,9 @@
           var data = response.data;
           window.console.log(data.statuses[0]);
           $scope.tweets = data.statuses.reverse();
+          _.map($scope.tweets, function(tweet) {
+            tweet.legitMediaURL = (tweet.media || [])[0]
+          })
           // $scope.tweets = _.first(data.statuses.reverse(), 5);
           $scope.search = data.search_metadata;
         },
